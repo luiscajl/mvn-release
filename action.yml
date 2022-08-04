@@ -4,13 +4,18 @@ inputs:
   github_token:
     description: "Github token" 
     required: true
+outputs:
+  version-released: ${{ steps.remove-snapshot.VERSION }}
 runs:
   using: "composite"
   steps:
   - name: Remove snapshot
+    id: remove-snapshot
     shell: bash
     run: |
       mvn -B versions:set -DremoveSnapshot -DgenerateBackupPoms=false
+      VERSION=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
+      echo "::set-output name=version::$VERSION"
   - name: Release version
     uses: EndBug/add-and-commit@v9
     with:
