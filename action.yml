@@ -17,13 +17,15 @@ runs:
       message: Release version   
       author_name: github-actions
       author_email: action@github.com
-  - name:  Merge main into develop      
-    uses: tukasz/direct-merge-action@master
-    with:
-      GITHUB_TOKEN: ${{ inputs.github_token }} 
-      source-branch: main
-      target-branch: develop
-      commit-message: "New snapshot version"
+
+
+  # - name:  Merge main into develop      
+  #   uses: tukasz/direct-merge-action@master
+  #   with:
+  #     GITHUB_TOKEN: ${{ inputs.github_token }} 
+  #     source-branch: main
+  #     target-branch: develop
+  #     commit-message: "New snapshot version"
   # - name: Up Merge
   #   uses: bambamboole/gha-upmerge@v1.0.1
   #   with:
