@@ -17,11 +17,21 @@ runs:
       message: Release version   
       author_name: github-actions
       author_email: action@github.com
-  - name: Merge main -> develop
-    uses: devmasx/merge-branch@1.4.0
+  - name: Up Merge
+    uses: bambamboole/gha-upmerge@v1.0.1
     with:
-      type: now
-      from_branch: main
-      target_branch: develop
-      github_token: ${{ inputs.github_token }}         
+      from_branch: 'main'
+      to_branch: 'develop'
+      user_name: github-actions
+      user_email: action@github.com
+    env:
+      GITHUB_TOKEN: ${{ inputs.github_token }}     
+  # - name: Merge main -> develop
+  #   uses: devmasx/merge-branch@1.4.0
+  #   with:
+  #     type: now
+  #     from_branch: main
+  #     target_branch: develop
+  #     github_token: ${{ inputs.github_token }}         
+
   
