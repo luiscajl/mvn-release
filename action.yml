@@ -4,48 +4,22 @@ inputs:
   github_token:
     description: "Github token" 
     required: true
-outputs:
-  version-released: ${{ steps.remove-snapshot.VERSION }}
 runs:
   using: "composite"
   steps:
   - name: Remove snapshot
-    id: remove-snapshot
     shell: bash
     run: |
       mvn -B versions:set -DremoveSnapshot -DgenerateBackupPoms=false
-      VERSION=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
-      echo "::set-output name=version::$VERSION"
   - name: Release version
-    uses: EndBug/add-and-commit@v9
+    uses: EndBug/add-and-commit@v7
     with:
       message: Release version   
-      author_name: github-actions
-      author_email: action@github.com
-
-
-  # - name:  Merge main into develop      
-  #   uses: tukasz/direct-merge-action@master
-  #   with:
-  #     GITHUB_TOKEN: ${{ inputs.github_token }} 
-  #     source-branch: main
-  #     target-branch: develop
-  #     commit-message: "New snapshot version"
-  # - name: Up Merge
-  #   uses: bambamboole/gha-upmerge@v1.0.1
-  #   with:
-  #     from_branch: 'main'
-  #     to_branch: 'develop'
-  #     user_name: github-actions
-  #     user_email: action@github.com
-  #   env:
-  #     GITHUB_TOKEN: ${{ inputs.github_token }}     
-  # - name: Merge main -> develop
-  #   uses: devmasx/merge-branch@1.4.0
-  #   with:
-  #     type: now
-  #     from_branch: main
-  #     target_branch: develop
-  #     github_token: ${{ inputs.github_token }}         
-
+  - name: Merge main -> develop
+    uses: devmasx/merge-branch@1.4.0
+    with:
+      type: now
+      from_branch: main
+      target_branch: develop
+      github_token: ${{ inputs.github_token }}         
   
